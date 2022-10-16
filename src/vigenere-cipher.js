@@ -20,9 +20,9 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
- constructor (direct = true) {
-  this.direct = direct;
-}
+  constructor(direct = true) {
+    this.direct = direct;
+  }
 
 
   encrypt(message, key) {
@@ -43,10 +43,7 @@ class VigenereCipheringMachine {
     }
   }
 
-    if (this.direct == false) {
-      return encryptedMessage.reverse().join("");
-    } else return encryptedMessage.join("");
-
+  return this.direct ? encryptedMessage.join('') : encryptedMessage.reverse().join('');
 
   }
 
@@ -61,23 +58,15 @@ class VigenereCipheringMachine {
       console.log(encryptedMessage[i]);
       let messageCharacter = encryptedMessage[i].charCodeAt(0);
       if (messageCharacter>=65 && messageCharacter<=90){
-        let characterToPush;
-        if (encryptedMessage[i].charCodeAt(0) - currentKey[j].charCodeAt(0) < 0) {
-          characterToPush = ((encryptedMessage[i].charCodeAt(0) - currentKey[j].charCodeAt(0) + 26)%26)+65;
-        } else if (encryptedMessage[i].charCodeAt(0) - currentKey[j].charCodeAt(0)>= 0){
-          characterToPush = ((encryptedMessage[i].charCodeAt(0) - currentKey[j].charCodeAt(0))%26)+65;
-        }
-          message.push(String.fromCharCode(characterToPush));
-          j++;
+        let characterToPush = ((encryptedMessage[i].charCodeAt(0) - currentKey[j].charCodeAt(0) + 26)%26)+65;
+        message.push(String.fromCharCode(characterToPush));
+        j++;
       } else {
       message.push(encryptedMessage[i]);
     }
   }
 
-    if (this.direct == false) {
-      return message.reverse().join("");
-    } else return message.join("");
-
+  return this.direct ? message.join('') : message.reverse().join('');
 
   }
 }
